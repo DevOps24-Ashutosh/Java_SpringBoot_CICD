@@ -17,6 +17,17 @@ pipeline {
         //         git branch: 'main', changelog: false, credentialsId: 'gitHubToken', poll: false, url: 'https://github.com/DevOps24-Ashutosh/Java_SpringBoot_CICD.git'
         //     }
         // }
+        stage('Debug Workspace') {
+            steps {
+                sh 'echo "Container workspace:"'
+                sh 'pwd'
+                sh 'ls -la'
+                sh 'echo "Creating a test file"'
+                sh 'touch test_file.txt'
+                sh 'echo "Updated container workspace:"'
+                sh 'ls -la'
+            }
+        }
         stage('Build and Test') {
             steps {
                 sh "cd spring-boot-app/ && mvn clean package" 
