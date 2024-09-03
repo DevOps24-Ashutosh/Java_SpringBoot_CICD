@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker { 
             image 'abhishekf5/maven-abhishek-docker-agent:v1'
+            args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
          }
     }
 
@@ -14,6 +15,11 @@ pipeline {
         stage('Checkout Source Code') {
             steps {
                 git branch: 'main', changelog: false, credentialsId: 'gitHubToken', poll: false, url: 'https://github.com/DevOps24-Ashutosh/Java_SpringBoot_CICD.git'
+            }
+        }
+        stage('Build and Test') {
+            steps {
+                sh "cd Java_SpringBoot_CICD/spring-boot-app && mvn clean package" 
             }
         }
     }
