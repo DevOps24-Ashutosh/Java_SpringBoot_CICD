@@ -86,7 +86,7 @@ pipeline {
                     BUILD_NUMBER=${BUILD_NUMBER}
                     cd spring-boot-app-manifests
                     sed -i "s/ImageTag/${BUILD_NUMBER}/g" deployment.yml
-                    git add spring-boot-app-manifests/deployment.yml
+                    git add deployment.yml
                     git commit -m "Update Docker Build image number $BUILD_NUMBER"
                     '''
                     withCredentials([gitUsernamePassword(credentialsId: 'gitHubToken', gitToolName: 'Default')]) {
