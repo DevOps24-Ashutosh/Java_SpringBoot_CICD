@@ -75,7 +75,7 @@ pipeline {
             steps {
                 sh '''
                 echo "Removing the previous built image"
-                docker rmi ${Docker_Image}
+                docker rmi ashuto91/javaspringboot:${BUILD_NUMBER}
                 '''
             }
         }
