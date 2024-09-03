@@ -43,5 +43,41 @@ pipeline {
                 } 
             }
         }
+        stage("Build and Push docker Image to DockerHub") {
+            environment {
+                DOCKER_IMAGE = "ashuto91/javaspringboot:${BUILD_NUMBER}"
+                // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
+                registryCredential = 'dockerHubCred'
+            }
+            steps {
+                // withCredentials([usernamePassword(credentialsId: 'dockerHubCred', passwordVariable: 'DockerHub-Password', usernameVariable: 'DockerHub-Username')]) {
+                //     sh 'docker login -u $DockerHub-Username -p $DockerHub-Password --password-stdin'   
+                // }
+                sh '''
+                echo "Building Docker Image from the Repos Dockerfile"
+                docker build -t ${Docker_Image} .
+                '''
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        sh '''
+                        echo "Pushing the docker Image built in previous step is being push to docker hub"
+                        docker push ${Docker_Image}
+                        '''
+                    }
+                }
+                // sh '''
+                // echo "Pushing the docker Image built in previous Images is being push to docker hub"
+                // docker push ashuto91/pytodo:${BUILD_NUMBER}
+                // '''
+            }
+        }
+        stage("Removing the previous Build Image") {
+            steps {
+                sh '''
+                echo "Removing the previous built image"
+                docker rmi ${Docker_Image}
+                '''
+            }
+        }
     }
 }
