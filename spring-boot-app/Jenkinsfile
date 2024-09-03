@@ -55,7 +55,7 @@ pipeline {
                 // }
                 sh '''
                 echo "Building Docker Image from the Repos Dockerfile"
-                docker build -t ${Docker_Image} .
+                docker build -t ${Docker_Image} spring-boot-app/Dockerfile
                 '''
                 script {
                     docker.withRegistry('', registryCredential) {
