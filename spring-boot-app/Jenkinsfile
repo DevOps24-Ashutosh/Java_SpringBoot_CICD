@@ -83,7 +83,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    git pull
+                    git pull origin main
                     BUILD_NUMBER=${BUILD_NUMBER}
                     cd spring-boot-app-manifests
                     sed -i "s|image:.*|image: ashuto91/javaspringboot:${BUILD_NUMBER}|g" deployment.yml
