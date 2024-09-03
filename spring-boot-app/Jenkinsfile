@@ -45,7 +45,7 @@ pipeline {
         }
         stage("Build and Push docker Image to DockerHub") {
             environment {
-                DOCKER_IMAGE = "ashuto91/javaspringboot:${BUILD_NUMBER}"
+                Docker_Image = "ashuto91/javaspringboot:${BUILD_NUMBER}"
                 // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
                 registryCredential = 'dockerHubCred'
             }
